@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>RRB NTPC 30-Day Study Plan</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f8f9fa;
+      padding: 20px;
+    }
+    h1 {
+      text-align: center;
+      color: #2c3e50;
+    }
+    h2 {
+      color: #d35400;
+      margin-top: 40px;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 20px;
+      background: #fff;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+    th, td {
+      padding: 12px;
+      border: 1px solid #ccc;
+      text-align: left;
+    }
+    th {
+      background-color: #f0f0f0;
+    }
+    input[type="checkbox"] {
+      margin-right: 6px;
+    }
+    .progress-container {
+      width: 100%;
+      background-color: #e0e0e0;
+      border-radius: 6px;
+      margin-bottom: 10px;
+      overflow: hidden;
+    }
+    .progress-bar {
+      height: 20px;
+      background-color: #ee1c2e;
+      width: 0%;
+      transition: width 0.3s;
+      color: white;
+      text-align: center;
+      font-size: 12px;
+      line-height: 20px;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>📘 RRB NTPC 30-Day Study Plan</h1>
+  <p>⏱️ Daily Time: 6–7 hours</p>
+
+  <div id="tablesContainer"></div>
+
+  <script>
+    const weeks = [
+      {
+        title: "WEEK 1 (Concept Building & Practice)",
+        days: [
+          ["Number System, LCM/HCF", "Series, Odd One Out", "Static GK (Indian Polity)", "1 Sectional (Math)"],
+          ["Percentage, Ratio", "Coding-Decoding", "Geography Basics", "1 Sectional (Reasoning)"],
+          ["Profit-Loss, SI/CI", "Blood Relations", "Indian History – Ancient", "1 GK quiz"],
+          ["Time-Speed-Distance", "Direction Sense", "Modern History", "Reasoning Mini-test"],
+          ["Time & Work, Pipes", "Venn Diagram", "Indian Constitution", "Math Mini-test"],
+          ["Average, Mixture", "Syllogism, Puzzle", "Current Affairs (Last 30 days)", "Reasoning Sectional"],
+          ["Revision", "Reasoning Review", "Static GK: Sports & Books", "Full Mock Test 1"]
+        ]
+      },
+      {
+        title: "WEEK 2 (Strengthening Fundamentals)",
+        days: [
+          ["Mensuration", "Input-Output", "Science: Biology", "1 Sectional (Math)"],
+          ["Algebra", "Direction Puzzle", "Science: Physics", "1 Sectional (Reasoning)"],
+          ["Trigonometry (Basics)", "Figure Series", "Science: Chemistry", "1 GK quiz"],
+          ["Quadratic Equations", "Calendar", "Budget/Policies", "Reasoning Mini-test"],
+          ["Geometry", "Clock", "Books & Authors", "Math Mini-test"],
+          ["Data Interpretation", "Coding Mixed", "Important Days", "Reasoning Sectional"],
+          ["Revision", "Mixed Reasoning", "Science Revision", "Full Mock Test 2"]
+        ]
+      },
+      {
+        title: "WEEK 3 (Practice & Previous Year)",
+        days: [
+          ["PYQ Maths 1", "PYQ Reasoning 1", "PYQ GK 1", "Mock 3"],
+          ["PYQ Maths 2", "PYQ Reasoning 2", "PYQ GK 2", "Mock 4"],
+          ["PYQ Maths 3", "PYQ Reasoning 3", "PYQ GK 3", "Mock 5"],
+          ["Percentage & Profit Mix", "Seating Arrangement", "Recent Appointments", "Reasoning Mini"],
+          ["TSD & Work Mix", "Number Puzzle", "Sports Current Affairs", "Math Mini"],
+          ["Algebra & Geometry Mix", "Logical Puzzles", "State Static GK", "Reasoning Test"],
+          ["Revision + Doubt Solving", "Mock Review", "GA Review", "Full Mock Test 6"]
+        ]
+      },
+      {
+        title: "WEEK 4 (Final Revision & Speed)",
+        days: [
+          ["Quick Revision: Math Formulas", "Reasoning Rapid Round", "Top 100 Current Affairs", "Mock 7"],
+          ["Speed Practice Set 1", "Mixed Puzzle", "Current Events", "Mock 8"],
+          ["Speed Practice Set 2", "Coding-Decoding Mixed", "Railway Specific GK", "Mock 9"],
+          ["Speed Practice Set 3", "Logical Reasoning Mix", "Important Schemes", "Mock 10"],
+          ["All Formula Practice", "Clock + Calendar Review", "Awards & Honours", "Mock 11"],
+          ["Last Minute Facts", "Puzzle & Syllogism", "Static GA Quiz", "Mock 12"],
+          ["Final Day: Light Revision", "Motivation & Rest", "Relax + News Headlines", "Mock 13 (Final)"]
+        ]
+      }
+    ];
+
+    const container = document.getElementById("tablesContainer");
+
+    weeks.forEach((week, weekIndex) => {
+      const title = document.createElement("h2");
+      title.textContent = week.title;
+      container.appendChild(title);
+
+      // Progress bar container
+      const progressContainer = document.createElement("div");
+      progressContainer.className = "progress-container";
+      const progressBar = document.createElement("div");
+      progressBar.className = "progress-bar";
+      progressBar.id = `progress-bar-${weekIndex}`;
+      progressContainer.appendChild(progressBar);
+      container.appendChild(progressContainer);
+
+      const table = document.createElement("table");
+
+      const headerRow = document.createElement("tr");
+      ["Day", "Mathematics", "Reasoning", "General Awareness", "Mock"].forEach(text => {
+        const th = document.createElement("th");
+        th.textContent = text;
+        headerRow.appendChild(th);
+      });
+      table.appendChild(headerRow);
+
+      let checkboxIds = [];
+
+      week.days.forEach((subjects, dayIndex) => {
+        const row = document.createElement("tr");
+        const dayCell = document.createElement("td");
+        dayCell.textContent = `Day ${weekIndex * 7 + dayIndex + 1}`;
+        row.appendChild(dayCell);
+
+        subjects.forEach((subject, subIndex) => {
+          const cell = document.createElement("td");
+          const checkbox = document.createElement("input");
+          checkbox.type = "checkbox";
+          const id = `w${weekIndex}_d${dayIndex}_s${subIndex}`;
+          checkbox.id = id;
+          checkboxIds.push(id);
+
+          // Load saved state
+          checkbox.checked = localStorage.getItem(id) === "true";
+          checkbox.addEventListener("change", () => {
+            localStorage.setItem(id, checkbox.checked);
+            updateProgressBar(weekIndex, checkboxIds);
+          });
+
+          cell.appendChild(checkbox);
+          cell.appendChild(document.createTextNode(subject));
+          row.appendChild(cell);
+        });
+
+        table.appendChild(row);
+      });
+
+      container.appendChild(table);
+
+      // Initial progress update
+      updateProgressBar(weekIndex, checkboxIds);
+    });
+
+    function updateProgressBar(weekIndex, ids) {
+      let checked = 0;
+      ids.forEach(id => {
+        if (localStorage.getItem(id) === "true") checked++;
+      });
+      const percent = Math.round((checked / ids.length) * 100);
+      const bar = document.getElementById(`progress-bar-${weekIndex}`);
+      bar.style.width = percent + "%";
+      bar.textContent = percent + "%";
+    }
+  </script>
+
+</body>
+</html>
